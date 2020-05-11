@@ -1,14 +1,14 @@
-from selenium import webdriver
+#from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import requests
 import logging
 import time
+from requests_html import HTMLSession
 
 
 class Utils:
     def __init__(self):
-        self.driver = webdriver.Chrome()
-        self.driver.get('https://cd.lianjia.com/ershoufang/')
+        # self.driver = webdriver.Chrome()
+        # self.driver.get('https://cd.lianjia.com/ershoufang/')
         #添加日志
         logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         filehadler = logging.FileHandler('lianjia_out.log',encoding='utf-8')
@@ -44,9 +44,8 @@ class Utils:
         #self.data()
         self.driver.switch_to_window(handles[-1])
         self.data()
-
-
-
+        self.driver.close()
+        self.driver.switch_to_window(handles[0])
 
 
     def area(self):
@@ -88,6 +87,9 @@ class Utils:
         self.logger.info('开始 创建新页面')
         # self.driver.close()
         self.driver.switch_to_window(handles[-1])  # 切换到新创建的窗口
+
 if __name__=='__main__':
     #Utils().next_page()
-    Utils().next_page()
+    lianjia =Utils2th()
+    homePage = lianjia.home_page()
+    lianjia.area_link(homePage)
